@@ -6,20 +6,21 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/t/torch-ema/torch_ema-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/t/torch-ema/torch_ema-{{ version }}.tar.gz
   sha256: 5a3595405fa311995f01291a1d4a9242d6be08a0fc9db29152ec6cfd586ea414
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
+    - setuptools
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - pytorch
 
 test:
@@ -29,6 +30,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/fadel/pytorch_ema
