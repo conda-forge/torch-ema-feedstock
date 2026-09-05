@@ -1,0 +1,44 @@
+schema_version: 1
+
+context:
+  name: torch-ema
+  version: "0.3"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/t/torch-ema/torch_ema-${{ version }}.tar.gz
+  sha256: 5a3595405fa311995f01291a1d4a9242d6be08a0fc9db29152ec6cfd586ea414
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - pytorch
+
+tests:
+  - python:
+      imports:
+        - torch_ema
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  summary: PyTorch library for computing moving averages of model parameters.
+  license: MIT
+  license_file: LICENSE
+  homepage: https://github.com/fadel/pytorch_ema
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
